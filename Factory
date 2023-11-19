@@ -1,0 +1,88 @@
+import java.util.Random;
+
+public abstract class MonsterFactory {
+    public abstract Monster createMonster(Room room);
+
+    public static MonsterFactory getRandomFactory() {
+        Random random = new Random();
+        int factoryType = random.nextInt(2);
+
+        if (factoryType == 0) {
+            return new SimpleMonsterFactory();
+        } else {
+            return new StrongMonsterFactory();
+        }
+    }
+
+    public static MonsterType getRandomMonsterType(MonsterFactory factory) {
+        if (factory instanceof SimpleMonsterFactory) {
+            Random random = new Random();
+            int monsterType = random.nextInt(2);
+
+            if (monsterType == 0) {
+                return MonsterType.SKELETON;
+            } else {
+                return MonsterType.GOBLIN;
+            }
+        } else if (factory instanceof StrongMonsterFactory) {
+            Random random = new Random();
+            int monsterType = random.nextInt(2);
+
+            if (monsterType == 0) {
+                return MonsterType.HOBGOBLIN;
+            } else {
+                return MonsterType.ORC;
+            }
+        } else {
+            throw new IllegalArgumentException("Invalid monster factory: " + factory);
+        }
+    }
+}
+
+class SimpleMonsterFactory extends MonsterFactory {
+    @Override
+    public Monster createMonster(Room room) {
+        Random random = new Random();
+        int hp = 0;
+        int damage = 0;
+        int[] position = room.getRandomPosition();
+        MonsterType monsterType = getRandomMonsterType(this);
+
+        switch (monsterType) {
+            case SKELETON:
+                hp = random.nextInt(30) + 1;
+                damage = 5;
+                return new Skeleton(position[0], position[1], hp, damage);
+            case GOBLIN:
+                hp = random.nextInt(30) + 1;
+                damage = 8;
+                return new Goblin(position[0], position[1], hp, damage);
+            default:
+                throw new IllegalArgumentException("Invalid monster type: " + monsterType);
+        }
+    }
+}
+
+class StrongMonsterFactory extends MonsterFactory {
+    @Override
+    public Monster createMonster(Room room) {
+        Random random = new Random();
+        int hp = 0;
+        int damage = 0;
+        int[] position = room.getRandomPosition();
+        MonsterType monsterType = getRandomMonsterType(this);
+
+        switch (monsterType) {
+            case HOBGOBLIN:
+                hp = random.nextInt(21) + 30;
+                damage = 15;
+                return new Hobgoblin(position[0], position[1], hp, damage);
+            case ORC:
+                hp = random.nextInt(21) + 30;
+                damage = 20;
+                return new Orc(position[0], position[1], hp, damage);
+            default:
+                throw new IllegalArgumentException("Invalid monster type: " + monsterType);
+        }
+    }
+}
