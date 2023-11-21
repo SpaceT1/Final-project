@@ -1,7 +1,11 @@
 # Final-project
+
 Name of your final project: Text-Adventure 
+
 Group: SE-2222
+
 Team members: Alikhan Tileubay
+
 Project Overview:
 • Provide some information about your project. It is a small game, where you will able to move, attack monsters and use potions to heal.
 • Describe the idea of the project. The main idea of the project is to create a game.
